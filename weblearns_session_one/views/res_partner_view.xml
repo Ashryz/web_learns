@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_partner_form_inherited" model="ir.ui.view">
+        <field name="name">view.partner.form.inherited</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/group[2]/field[@name='category_id']" position="after">
+                <field name="filter_products_in_po_based_on_category"/>
+                <field name="product_lst_ids" widget="many2many_tags" invisible="not filter_products_in_po_based_on_category"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
