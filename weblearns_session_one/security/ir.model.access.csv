@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_equipment_category_user,access.equipment.category.user,model_equipment_category,base.group_user,1,0,0,0
 access_equipment_category_inventory_manager,access.equipment.category.inventory.manager,model_equipment_category,stock.group_stock_manager,1,0,1,0
 access_equipment_category_admin,access.equipment.category.admin,model_equipment_category,base.group_system,1,1,1,1
+access_procurement_manager_wizard,access.procurement.manager.wizard,model_procurement_manager_wizard,,1,1,1,1

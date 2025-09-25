@@ -24,6 +24,7 @@
         'views/product_template_view.xml',
         'views/purchase_order_view.xml',
         'views/res_partner_view.xml',
+        'wizard/procurement_manager_wizard.xml',
     ],
 
     'installable': True,

@@ -6,8 +6,20 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//group/group[2]/field[@name='category_id']" position="after">
+                <field name="vendor_priority"/>
                 <field name="filter_products_in_po_based_on_category"/>
                 <field name="product_lst_ids" widget="many2many_tags" invisible="not filter_products_in_po_based_on_category"/>
+            </xpath>
+        </field>
+    </record>
+
+        <record id="view_res_partner_filter_inherited" model="ir.ui.view">
+        <field name="name">view.res.partner.filter.inherited</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/filter[@name='salesperson']" position="after">
+                <filter name="vendor_priority" string="Vendor Priority" domain="[]" context="{'group_by' : 'vendor_priority'}"/>
             </xpath>
         </field>
     </record>
