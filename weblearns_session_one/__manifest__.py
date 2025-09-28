@@ -15,6 +15,8 @@
         'base',
         'stock',
         'purchase',
+        'sale',
+        'account'
     ],
 
     'data': [
@@ -23,8 +25,10 @@
         'views/equipment_category_view.xml',
         'views/product_template_view.xml',
         'views/purchase_order_view.xml',
+        'views/sale_order_view.xml',
         'views/res_partner_view.xml',
         'wizard/procurement_manager_wizard.xml',
+        'report/purchase_order_document.xml',
     ],
 
     'installable': True,
