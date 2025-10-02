@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="linkedin_post_list_view" model="ir.ui.view">
+        <field name="name">linkedin.post.list.view</field>
+        <field name="model">linkedin.post</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="config_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="linkedin_post_form_view" model="ir.ui.view">
+        <field name="name">linkedin.post.form.view</field>
+        <field name="model">linkedin.post</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_post" string="Post" type="object" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="config_id"/>
+                        </group>
+                        <group string="Linkedin Post">
+                            <field name="content" nolabel="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_linkedin_post" model="ir.actions.act_window">
+        <field name="name">Linkedin Post</field>
+        <field name="res_model">linkedin.post</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your Linkedin post ..
+            </p>
+        </field>
+    </record>
+    <menuitem id="linkedin_post_menu"
+              name="Posts"
+              parent="linkedin_root_menu"
+              sequence="5"
+              action="action_linkedin_post"/>
+</odoo>

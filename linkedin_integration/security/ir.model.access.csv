@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_linkedin_config,access.linkedin.config,model_linkedin_config,base.group_user,1,1,1,1
+access_linkedin_post,access.linkedin.post,model_linkedin_post,base.group_user,1,1,1,1
