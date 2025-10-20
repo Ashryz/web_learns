@@ -10,9 +10,47 @@
             </t>
         </xpath>
     </template>
-    <template id="portal_my_patients" name="My patients">
-           <t t-call="portal.portal_layout">
-           </t>
+    <template id="portal_my_home_menu_patients" name="Portal layout : patients menu entries"
+              inherit_id="portal.portal_breadcrumbs" priority="20">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'patients'" class="breadcrumb-item">Patients</li>
+        </xpath>
+    </template>
+    <template id="portal_my_patients_list" name="My patients">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Patients</t>
+            </t>
+            <t t-if="patients" t-call="portal.portal_table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="patients" t-as="p">
+                        <tr>
+                            <td>
+                                <t t-out="p.name"/>
+                            </td>
+                            <td>
+                                <t t-out="p.phone"/>
+                            </td>
+                            <td>
+                                <t t-out="p.email"/>
+                            </td>
+                            <td>
+                                <t t-out="p.country_id.name"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+        </t>
     </template>
 
 </odoo>
