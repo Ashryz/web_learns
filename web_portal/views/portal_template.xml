@@ -13,7 +13,11 @@
     <template id="portal_my_home_menu_patients" name="Portal layout : patients menu entries"
               inherit_id="portal.portal_breadcrumbs" priority="20">
         <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
-            <li t-if="page_name == 'patients'" class="breadcrumb-item">Patients</li>
+            <li t-if="page_name == 'patients'" class="breadcrumb-item active">Patients</li>
+            <li t-if="page_name == 'patient'" class="breadcrumb-item"><a t-attf-href="/my/patients?{{ keep_query() }}">Patients</a></li>
+            <li t-if="page_name == 'patient'" class="breadcrumb-item active">
+                <t t-out="patient.name"/>
+            </li>
         </xpath>
     </template>
     <template id="portal_my_patients_list" name="My patients">
@@ -24,10 +28,11 @@
             </t>
             <t t-if="patients" t-call="portal.portal_table">
                 <thead>
-                    <tr>
+                    <tr class="active">
                         <th>Name</th>
                         <th>Phone</th>
                         <th>Email</th>
+                        <th>city</th>
                         <th>Country</th>
                     </tr>
                 </thead>
@@ -35,13 +40,18 @@
                     <t t-foreach="patients" t-as="p">
                         <tr>
                             <td>
-                                <t t-out="p.name"/>
+                                <a t-attf-href="/my/patient/#{p.id}">
+                                    <t t-out="p.name"/>
+                                </a>
                             </td>
                             <td>
                                 <t t-out="p.phone"/>
                             </td>
                             <td>
                                 <t t-out="p.email"/>
+                            </td>
+                            <td>
+                                <t t-out="p.city"/>
                             </td>
                             <td>
                                 <t t-out="p.country_id.name"/>
@@ -51,6 +61,92 @@
                 </tbody>
             </t>
         </t>
+    </template>
+
+    <template id="portal_my_patients_form" inherit_id="portal.portal_sidebar">
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+            <section style="background-color: #eee;">
+                <div class="container py-5">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card mb-4">
+                                <div class="card-body text-center">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                         alt="avatar"
+                                         class="rounded-circle img-fluid" style="width: 150px;"/>
+                                    <h5 class="my-3">
+                                        <span t-out="patient.name"/>
+                                    </h5>
+                                    <p class="text-muted mb-1">Full Stack Developer</p>
+                                    <p class="text-muted mb-4">
+                                        <span t-out="patient.city"/>
+                                        ,
+                                        <span t-out="patient.state_id.name"/>
+                                        ,
+                                        <span t-out="patient.country_id.name"/>
+                                    </p>
+                                    <div class="d-flex justify-content-center mb-2">
+                                        <button type="button"
+                                                class="btn btn-primary">Follow
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-outline-primary ms-1">Message
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Full Name</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0" t-out="patient.name">Johnatan Smith</p>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Email</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0" t-out="patient.email">example@example.com</p>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Phone</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0" t-out="patient.phone">(097) 234-5678</p>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Address</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">
+                                                <span t-out="patient.city"/>
+                                                ,
+                                                <span t-out="patient.state_id.name"/>
+                                                ,
+                                                <span t-out="patient.country_id.name"/>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </xpath>
     </template>
 
 </odoo>
