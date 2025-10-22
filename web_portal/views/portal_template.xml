@@ -63,7 +63,7 @@
         </t>
     </template>
 
-    <template id="portal_my_patients_form" inherit_id="portal.portal_sidebar">
+    <template id="portal_my_patients_form" inherit_id="portal.portal_sidebar" primary="True">
         <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
             <section style="background-color: #eee;">
                 <div class="container py-5">
