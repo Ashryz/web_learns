@@ -13,9 +13,11 @@
     <template id="portal_my_home_menu_patients" name="Portal layout : patients menu entries"
               inherit_id="portal.portal_breadcrumbs" priority="20">
         <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
-            <li t-if="page_name == 'patients'" class="breadcrumb-item active">Patients</li>
-            <li t-if="page_name == 'patient'" class="breadcrumb-item"><a t-attf-href="/my/patients?{{ keep_query() }}">Patients</a></li>
-            <li t-if="page_name == 'patient'" class="breadcrumb-item active">
+            <li t-if="page_name == 'patients'" t-attf-class="breadcrumb-item #{'active ' if not patient else ''}">
+                <a t-if="patient" t-attf-href="/my/patients?{{ keep_query() }}">Patients</a>
+                <t t-else="">Patients</t>
+            </li>
+            <li t-if="patient" class="breadcrumb-item active">
                 <t t-out="patient.name"/>
             </li>
         </xpath>
@@ -40,7 +42,7 @@
                     <t t-foreach="patients" t-as="p">
                         <tr>
                             <td>
-                                <a t-attf-href="/my/patient/#{p.id}">
+                                <a t-attf-href="/my/patients/#{p.id}">
                                     <t t-out="p.name"/>
                                 </a>
                             </td>
@@ -71,9 +73,16 @@
                         <div class="col-lg-4">
                             <div class="card mb-4">
                                 <div class="card-body text-center">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                                         alt="avatar"
-                                         class="rounded-circle img-fluid" style="width: 150px;"/>
+                                    <t t-if="patient.image_1920">
+                                        <img t-att-src="'/web/image/%s/%s/image_1920' % (patient._name, patient.id)"
+                                             alt="avatar"
+                                             class="rounded-circle img-fluid" style="width: 150px;"/>
+                                    </t>
+                                    <t t-else="">
+                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                             alt="avatar"
+                                             class="rounded-circle img-fluid" style="width: 150px;"/>
+                                    </t>
                                     <h5 class="my-3">
                                         <span t-out="patient.name"/>
                                     </h5>
@@ -86,12 +95,15 @@
                                         <span t-out="patient.country_id.name"/>
                                     </p>
                                     <div class="d-flex justify-content-center mb-2">
-                                        <button type="button"
-                                                class="btn btn-primary">Follow
-                                        </button>
-                                        <button type="button"
-                                                class="btn btn-outline-primary ms-1">Message
-                                        </button>
+                                        <div class="btn-group  me-1 mb-1">
+                                            <a class="btn btn-secondary o_download_btn"
+                                               title="Download"
+                                               t-attf-href="/web_enterprise/partner/#{patient.id}/vcard">
+<!--                                             t-attf-href="/my/patients/print/#{patient.id}"-->
+                                                <i class="fa fa-download"/>
+                                                Download
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -141,6 +153,13 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <!-- chatter -->
+                            <div id="portal_patient_communication" class="mt-4">
+                                <h2>History</h2>
+                                <t t-call="portal.message_thread">
+                                    <t t-set="object" t-value="patient"/>
+                                </t>
                             </div>
                         </div>
                     </div>

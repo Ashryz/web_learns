@@ -56,7 +56,7 @@ class WbCustomerPortal(portal.CustomerPortal):
         }
         return request.render('web_portal.portal_my_patients_list',values)
 
-    @http.route(['/my/patient/<int:patient_id>'], type='http', auth='user', website=True)
+    @http.route(['/my/patients/<int:patient_id>'], type='http', auth='user', website=True)
     def portal_my_patients_form(self, patient_id,**kwargs):
         patient = request.env['res.partner'].browse(patient_id)
         patient_category = request.env['res.partner.category'].search([('name', '=', 'patient')], limit=1)
@@ -67,8 +67,13 @@ class WbCustomerPortal(portal.CustomerPortal):
         next_record = current_idx < len(patient_ids) - 1 and patient_ids[current_idx + 1]
         values ={
             'patient': patient,
-            'page_name': 'patient',
-            'prev_record': f'/my/patient/{prev_record}' if prev_record else None,
-            'next_record': f'/my/patient/{next_record}' if next_record else None,
+            'page_name': 'patients',
+            'prev_record': f'/my/patients/{prev_record}' if prev_record else None,
+            'next_record': f'/my/patients/{next_record}' if next_record else None,
         }
         return request.render('web_portal.portal_my_patients_form', values)
+
+    @http.route(['/my/patients/print/<int:patient_id>'], type='http', auth='user', website=True)
+    def portal_print_patient(self,patient_id,**kwargs):
+        print("print called successfully")
+        return
