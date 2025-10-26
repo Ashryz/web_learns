@@ -81,8 +81,22 @@ class WbCustomerPortal(portal.CustomerPortal):
     @http.route(['/new/patient'], type='http', methods=['POST','GET'], auth='user', website=True)
     def register_new_patient(self, **kwargs):
         country = request.env['res.country'].search([])
-        values ={
+        values = {
             'page_name': 'new_patient',
             'countries': country
         }
+        patient_category = request.env['res.partner.category'].search([('name', '=', 'patient')], limit=1)
+        if request.httprequest.method == 'POST':
+            error_list = []
+            if not kwargs.get('name'):
+                error_list.append("Name is required field")
+            if not error_list:
+                request.env['res.partner'].create({
+                    'name': kwargs.get('name'),
+                    'country_id': kwargs.get('country'),
+                    'category_id':[(6,0,[patient_category.id])]
+                })
+                values['success_msg'] = "Patient is registered successfully"
+            else:
+                values['error_list'] = error_list
         return request.render('web_portal.portal_register_new_patient_form', values)

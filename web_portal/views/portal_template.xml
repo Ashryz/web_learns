@@ -177,7 +177,15 @@
     </template>
     <template id="portal_register_new_patient_form" inherit_id="portal.portal_sidebar" primary="True">
         <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
-            <div class="container py-5">
+            <div class="container py-3">
+                <t t-foreach="error_list" t-as="error">
+                    <div class="alert alert-danger" role="alert">
+                        <t t-out="error"/>
+                    </div>
+                </t>
+                <div class="alert alert-success" role="alert" t-if="success_msg">
+                    <t t-out="success_msg"/>
+                </div>
                 <form method="post">
                     <div class="form-group row mb-1">
                         <label class="col-sm-2 col-form-label" for="name">Name</label>
