@@ -77,3 +77,12 @@ class WbCustomerPortal(portal.CustomerPortal):
     def portal_print_patient(self,patient_id,**kwargs):
         print("print called successfully")
         return
+
+    @http.route(['/new/patient'], type='http', methods=['POST','GET'], auth='user', website=True)
+    def register_new_patient(self, **kwargs):
+        country = request.env['res.country'].search([])
+        values ={
+            'page_name': 'new_patient',
+            'countries': country
+        }
+        return request.render('web_portal.portal_register_new_patient_form', values)
