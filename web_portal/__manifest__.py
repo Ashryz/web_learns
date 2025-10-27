@@ -27,4 +27,9 @@
         'views/portal_template.xml',
     ],
 
+    'assets': {
+        'web.assets_frontend': [
+            'web_portal/static/src/js/new_patient_validation.js',
+        ]
+    },
 }
